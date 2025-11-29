@@ -6,7 +6,8 @@ export async function getDoctors() {
   const {data, error} = await sb
     .from("doctors")
     .select("*")
-    .order("created_at", {ascending: false});
+    .order("created_at", {ascending: false})
+    .limit(50);
   if (error) throw error;
   return data ?? [];
 }

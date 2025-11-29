@@ -18,7 +18,12 @@ export default async function SessionsPage() {
         <SessionFormModal patients={patients} doctors={doctors} />
       </div>
 
-      <Suspense fallback={<AppleWave className="my-8" />}>
+      <Suspense
+        fallback={
+          <div className="min-h-[200px] flex items-center justify-center">
+            <AppleWave />
+          </div>
+        }>
         {sessions.length === 0 ? (
           <p className="text-gray-500">No sessions yet.</p>
         ) : (

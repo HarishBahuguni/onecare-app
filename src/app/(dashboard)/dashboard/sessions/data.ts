@@ -27,7 +27,8 @@ export async function getDoctors() {
   const {data, error} = await sb
     .from("doctors")
     .select("id, name")
-    .order("name");
+    .order("name")
+    .limit(50);
   if (error) throw error;
   return data ?? [];
 }

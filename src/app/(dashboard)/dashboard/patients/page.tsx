@@ -1,9 +1,8 @@
 import {getPatients} from "./data";
-import SkeletonTable from "@/components/SkeletonTable";
-import {Suspense} from "react";
-import {format} from "date-fns";
 import PatientFormModal from "./PatientFormModal";
 import AppleWave from "@/components/AppleWave";
+import {Suspense} from "react";
+import {format} from "date-fns";
 
 export default async function PatientsPage() {
   const patients = await getPatients();
@@ -15,7 +14,12 @@ export default async function PatientsPage() {
         <PatientFormModal />
       </div>
 
-      <Suspense fallback={<AppleWave className="my-8" />}>
+      <Suspense
+        fallback={
+          <div className="min-h-[200px] flex items-center justify-center">
+            <AppleWave />
+          </div>
+        }>
         {patients.length === 0 ? (
           <p className="text-gray-500">No patients yet.</p>
         ) : (

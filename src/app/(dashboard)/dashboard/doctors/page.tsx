@@ -13,7 +13,12 @@ export default async function DoctorsPage() {
         <DoctorFormModal />
       </div>
 
-      <Suspense fallback={<AppleWave className="my-8" />}>
+      <Suspense
+        fallback={
+          <div className="min-h-[200px] flex items-center justify-center">
+            <AppleWave />
+          </div>
+        }>
         {doctors.length === 0 ? (
           <p className="text-gray-500">No doctors yet.</p>
         ) : (
