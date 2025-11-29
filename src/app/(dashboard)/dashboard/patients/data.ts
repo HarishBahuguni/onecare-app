@@ -1,13 +1,15 @@
 import "server-only";
 import {createClient} from "@/lib/supabaseServer";
+import {paginateQuery, paginateResponse} from "@/lib/paginate";
+import type {Paginated} from "@/types/pagination";
 
-export async function getPatients() {
+export async function getPaginatedPatients(
+  page: number = 1,
+  perPage: number = 10
+): Promise<Paginated<any>> {
   const sb = await createClient();
-  const {data, error} = await sb
-    .from("patients")
-    .select("*")
-    .order("created_at", {ascending: false})
-    .limit(50);
+  const query = sb.from("patients").select("*", {count: "exact"});
+  const {data, count, error} = await paginateQuery(query, page, perPage);
   if (error) throw error;
-  return data ?? [];
+  return paginateResponse(data, count!, page, perPage);
 }

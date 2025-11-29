@@ -1,26 +1,30 @@
 "use client";
-
-import {useEffect} from "react";
 import {usePathname} from "next/navigation";
-import AppleWave from "./AppleWave";
+import {useEffect, useState} from "react";
 
 export default function RouteLoader() {
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const overlay = document.getElementById("route-loader");
-    if (!overlay) return;
-
-    overlay.classList.remove("hidden");
-    const t = setTimeout(() => overlay.classList.add("hidden"), 1200);
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 300); // fake 300 ms
     return () => clearTimeout(t);
   }, [pathname]);
 
+  if (!loading) return null;
+
   return (
-    <div
-      id="route-loader"
-      className="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-lg">
-      <AppleWave />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+      <div className="flex gap-2">
+        {[...Array(5)].map((_, i) => (
+          <span
+            key={i}
+            className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"
+            style={{animationDelay: `${i * 150}ms`}}
+          />
+        ))}
+      </div>
     </div>
   );
 }

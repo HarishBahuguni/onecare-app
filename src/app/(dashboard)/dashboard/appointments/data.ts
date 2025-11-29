@@ -1,35 +1,36 @@
 import "server-only";
 import {createClient} from "@/lib/supabaseServer";
+import {paginateQuery, paginateResponse} from "@/lib/paginate";
+import type {Paginated} from "@/types/pagination";
 
-export async function getAppointments() {
+export async function getPaginatedAppointments(
+  page: number = 1,
+  perPage: number = 10
+): Promise<Paginated<any>> {
   const sb = await createClient();
-  const {data, error} = await sb
+  const query = sb
     .from("appointments")
-    .select(`*, patients(name), doctors(name)`) // ← DOT added
-    .order("appointment_date", {ascending: true})
-    .order("appointment_time", {ascending: true});
+    .select(`*, patients(name), doctors(name)`, {count: "exact"})
+    .order("appointment_date", {ascending: false})
+    .order("appointment_time", {ascending: false});
 
+  const {data, count, error} = await paginateQuery(query, page, perPage);
   if (error) throw error;
-  return data ?? [];
+  return paginateResponse(data, count!, page, perPage);
 }
 
 export async function getPatients() {
   const sb = await createClient();
-  const {data, error} = await sb
-    .from("patients")
-    .select("id, name")
-    .order("name");
-  if (error) throw error;
+  const {data} = await sb.from("patients").select("id, name").order("name");
   return data ?? [];
 }
 
 export async function getDoctors() {
   const sb = await createClient();
-  const {data, error} = await sb
+  const {data} = await sb
     .from("doctors")
     .select("id, name")
     .order("name")
     .limit(50);
-  if (error) throw error;
   return data ?? [];
 }
