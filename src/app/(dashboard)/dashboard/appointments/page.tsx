@@ -1,8 +1,8 @@
 import {getAppointments, getPatients, getDoctors} from "./data";
-import SkeletonTable from "@/components/SkeletonTable";
-import {Suspense} from "react";
 import {format} from "date-fns";
 import AppointmentFormModal from "./AppointmentFormModal";
+import AppleWave from "@/components/AppleWave";
+import {Suspense} from "react";
 
 export default async function AppointmentsPage() {
   const [appointments, patients, doctors] = await Promise.all([
@@ -18,7 +18,7 @@ export default async function AppointmentsPage() {
         <AppointmentFormModal patients={patients} doctors={doctors} />
       </div>
 
-      <Suspense fallback={<SkeletonTable />}>
+      <Suspense fallback={<AppleWave className="my-8" />}>
         {appointments.length === 0 ? (
           <p className="text-gray-500">No appointments yet.</p>
         ) : (

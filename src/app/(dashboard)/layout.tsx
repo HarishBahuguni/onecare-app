@@ -5,6 +5,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {signOut} from "@/lib/auth";
 import {Toaster} from "react-hot-toast";
+import PageLoader from "@/components/PageLoader";
 import {
   CalendarDaysIcon,
   UsersIcon,
@@ -95,6 +96,7 @@ export default function DashboardLayout({
 
         <main className="flex-1 p-4 lg:p-8">{children}</main>
         <Toaster position="top-right" />
+        <PageLoader />
       </div>
     </div>
   );

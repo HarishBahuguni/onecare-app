@@ -1,7 +1,7 @@
 import {getDoctors} from "./data";
-import SkeletonTable from "@/components/SkeletonTable";
-import {Suspense} from "react";
 import DoctorFormModal from "./DoctorFormModal";
+import AppleWave from "@/components/AppleWave";
+import {Suspense} from "react";
 
 export default async function DoctorsPage() {
   const doctors = await getDoctors();
@@ -13,7 +13,7 @@ export default async function DoctorsPage() {
         <DoctorFormModal />
       </div>
 
-      <Suspense fallback={<SkeletonTable />}>
+      <Suspense fallback={<AppleWave className="my-8" />}>
         {doctors.length === 0 ? (
           <p className="text-gray-500">No doctors yet.</p>
         ) : (

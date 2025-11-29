@@ -1,8 +1,9 @@
 import {getPatients} from "./data";
 import SkeletonTable from "@/components/SkeletonTable";
-import {format} from "date-fns";
 import {Suspense} from "react";
+import {format} from "date-fns";
 import PatientFormModal from "./PatientFormModal";
+import AppleWave from "@/components/AppleWave";
 
 export default async function PatientsPage() {
   const patients = await getPatients();
@@ -14,7 +15,7 @@ export default async function PatientsPage() {
         <PatientFormModal />
       </div>
 
-      <Suspense fallback={<SkeletonTable />}>
+      <Suspense fallback={<AppleWave className="my-8" />}>
         {patients.length === 0 ? (
           <p className="text-gray-500">No patients yet.</p>
         ) : (
@@ -37,7 +38,7 @@ export default async function PatientsPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
-                {patients.map((p) => (
+                {patients.map((p: any) => (
                   <tr key={p.id} className="hover:bg-gray-50">
                     <td className="px-4 py-2">{p.name}</td>
                     <td className="px-4 py-2">{p.gender}</td>

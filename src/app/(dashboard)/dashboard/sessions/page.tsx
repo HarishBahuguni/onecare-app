@@ -1,8 +1,8 @@
 import {getSessions, getPatients, getDoctors} from "./data";
-import SkeletonTable from "@/components/SkeletonTable";
-import {Suspense} from "react";
 import {format} from "date-fns";
 import SessionFormModal from "./SessionFormModal";
+import AppleWave from "@/components/AppleWave";
+import {Suspense} from "react";
 
 export default async function SessionsPage() {
   const [sessions, patients, doctors] = await Promise.all([
@@ -18,7 +18,7 @@ export default async function SessionsPage() {
         <SessionFormModal patients={patients} doctors={doctors} />
       </div>
 
-      <Suspense fallback={<SkeletonTable />}>
+      <Suspense fallback={<AppleWave className="my-8" />}>
         {sessions.length === 0 ? (
           <p className="text-gray-500">No sessions yet.</p>
         ) : (

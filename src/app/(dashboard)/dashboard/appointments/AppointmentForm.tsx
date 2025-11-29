@@ -5,6 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {appointmentSchema, type Appointment} from "@/types/appointment";
 import {createAppointment, updateAppointment} from "./actions";
 import {toast} from "react-hot-toast";
+import MicroBar from "@/components/MicroBar";
 
 type Props = {
   appointment?: Appointment & {id?: string};
@@ -102,8 +103,11 @@ export default function AppointmentForm({
       />
 
       <div className="flex gap-2">
-        <button type="submit" disabled={isSubmitting} className="btn primary">
-          {isSubmitting ? "Saving…" : "Save"}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn primary flex items-center gap-2">
+          {isSubmitting ? <MicroBar /> : "Save"}
         </button>
         <button
           type="button"

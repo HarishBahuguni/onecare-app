@@ -5,6 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {sessionSchema, type Session} from "@/types/session";
 import {createSession, updateSession} from "./actions";
 import {toast} from "react-hot-toast";
+import MicroBar from "@/components/MicroBar";
 
 type Props = {
   session?: Session & {id?: string};
@@ -105,8 +106,11 @@ export default function SessionForm({
       />
 
       <div className="flex gap-2">
-        <button type="submit" disabled={isSubmitting} className="btn primary">
-          {isSubmitting ? "Saving…" : "Save"}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn primary flex items-center gap-2">
+          {isSubmitting ? <MicroBar /> : "Save"}
         </button>
         <button
           type="button"

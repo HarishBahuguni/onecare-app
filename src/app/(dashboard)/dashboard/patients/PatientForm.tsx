@@ -5,6 +5,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {patientSchema, type Patient} from "@/types/patient";
 import {createPatient, updatePatient} from "./actions";
 import {toast} from "react-hot-toast";
+import MicroBar from "@/components/MicroBar";
 
 type Props = {
   patient?: Patient & {id?: string};
@@ -67,8 +68,11 @@ export default function PatientForm({patient, onClose}: Props) {
       />
 
       <div className="flex gap-2">
-        <button type="submit" disabled={isSubmitting} className="btn primary">
-          {isSubmitting ? "Saving…" : "Save"}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn primary flex items-center gap-2">
+          {isSubmitting ? <MicroBar /> : "Save"}
         </button>
         <button
           type="button"

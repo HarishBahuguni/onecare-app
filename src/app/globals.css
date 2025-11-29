@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer components {
   .input {
@@ -8,5 +8,17 @@
   }
   .btn.primary {
     @apply bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition;
+  }
+}
+
+@keyframes applePop {
+  0%,
+  100% {
+    transform: scale(1);
+    background-color: #d1d5db; /* gray-300 */
+  }
+  50% {
+    transform: scale(1.35);
+    background-color: #3b82f6; /* blue-600 */
   }
 }
