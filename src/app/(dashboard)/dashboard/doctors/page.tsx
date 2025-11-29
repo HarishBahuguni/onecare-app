@@ -1,8 +1,58 @@
-export default function DoctorsPage() {
+import {getDoctors} from "./data";
+import SkeletonTable from "@/components/SkeletonTable";
+import {Suspense} from "react";
+import DoctorFormModal from "./DoctorFormModal";
+
+export default async function DoctorsPage() {
+  const doctors = await getDoctors();
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Doctors</h1>
-      <p className="text-gray-600">Doctor directory coming soon…</p>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Doctors</h1>
+        <DoctorFormModal />
+      </div>
+
+      <Suspense fallback={<SkeletonTable />}>
+        {doctors.length === 0 ? (
+          <p className="text-gray-500">No doctors yet.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Name
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Email
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Phone
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    License
+                  </th>
+                  <th className="px-4 py-2 text-left text-sm font-medium">
+                    Specialization
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100">
+                {doctors.map((d: any) => (
+                  <tr key={d.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-2">{d.name}</td>
+                    <td className="px-4 py-2">{d.email ?? "-"}</td>
+                    <td className="px-4 py-2">{d.phone ?? "-"}</td>
+                    <td className="px-4 py-2">{d.license_no ?? "-"}</td>
+                    <td className="px-4 py-2">{d.specialization ?? "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 }
